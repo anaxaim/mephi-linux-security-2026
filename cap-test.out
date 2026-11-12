@@ -1,0 +1,9 @@
+  File: /home/user1/cap-test.txt
+  Size: 0         	Blocks: 0          IO Block: 4096   regular empty file
+Device: 0,55	Inode: 705         Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2026-11-12 01:04:20.522702176 +0300
+Modify: 2026-11-12 01:04:20.522702176 +0300
+Change: 2026-11-12 01:07:40.834309984 +0300
+ Birth: 2026-11-12 01:04:20.522702176 +0300

@@ -1,0 +1,70 @@
+    1  sudo -iu user1
+    2  echo "MEPHI secret test data" | sudo tee /var/tmp/mephi-secret.txt
+    3  sudo chown root:root /var/tmp/mephi-secret.txt 
+    4  sudo chmod 600 /var/tmp/mephi-secret.txt 
+    5  ls -l /var/tmp/mephi-secret.txt 
+    6  sudo -u user1 cat /var/tmp/mephi-secret.txt 
+    7  sudo cp /usr/bin/cat /home/user1/cat-suid
+    8  sudo chown root:root /home/user1/cat-suid
+    9  sudo chmod 4755 /home/user1/cat-suid
+   10  ls -l /home/user1/cat-suid
+   11  sudo ls -l /home/user1/cat-suid
+   12  sudo -u user1 /home/user1/cat-suid /var/tmp/mephi-secret.txt 
+   13  stat /home/user1/cat-suid >> "$HOME/mephi-linux-security-2026/stat.out"
+   14  sudo stat /home/user1/cat-suid >> "$HOME/mephi-linux-security-2026/stat.out"
+   15  sudo -u user1 /home/user1/cat-suid /var/tmp/mephi-secret.txt > "$HOME/mephi-linux-security-2026/suid-test.out"
+   16  command -v setcap
+   17  sudo cp /usr/bin/chown /home/user1/chown-cap
+   18  sudo chown 755 /home/user1/chown-cap
+   19  ls -l /home/user1/chown-cap
+   20  sudo ls -l /home/user1/chown-cap
+   21  sudo setcap cap_chown=ep /home/user1/chown-cap
+   22  getcap /home/user1/chown-cap
+   23  sudo getcap /home/user1/chown-cap
+   24  sudo -u user1 touch /home/user1/cap-test.txt
+   25  ls -l /home/user1/cap-test.txt
+   26  sudo ls -l /home/user1/cap-test.txt
+   27  sudo -u user1 /usr/bin/chown root:root /home/user1/cap-test.txt
+   28  sudo -u user1 /usr/bin/chown-cap root:root /home/user1/cap-test.txt
+   29  sudo -u user1 /home/user1/chown-cap root:root /home/user1/cap-test.txt
+   30  ls -l /home/user1/cap-test.txt
+   31  sudo ls -l /home/user1/cap-test.txt
+   32  getcap /home/user1/chown-cap > "$HOME/mephi-linux-security-2026/getcap.out"
+   33  sudo getcap /home/user1/chown-cap > "$HOME/mephi-linux-security-2026/getcap.out"
+   34  sudo stat /home/user1/chown-cap >> "$HOME/mephi-linux-security-2026/stat.out"
+   35  sudo stat /home/user1/cap-test.txt > "$HOME/mephi-linux-security-2026/cap-test.out"
+   36  cat "$HOME/mephi-linux-security-2026/getcap.out"
+   37  which timedatectl
+   38  sudo which timedatectl
+   39  echo 'user1 ALL=(root) /usr/bin/timedatectl set-time *' | sudo tee /etc/sudoers.d/user1-time
+   40  sudo chmod 440 /etc/sudoers.d/user1-time
+   41  sudo visudo -c
+   42  sudo -l -U user1
+   43  timedatectl
+   44  sudo timedatectl set-ntp false
+   45  sudo -iu user1
+   46  sudo timedatectl set-ntp true
+   47  sudo cat /etc/sudoers.d/user1-time > "$HOME/mephi-linux-security-2026/sudoers-rule.out"
+   48  sudo -l -U user1 > "$HOME/mephi-linux-security-2026/sudo-check.out"
+   49  ls -l "$HOME/mephi-linux-security-2026"
+   50  sudo -l -U user1
+   51  cd "$HOME/mephi-linux-security-2026"
+   52  stat /home/user1 > stat.out
+   53  stat /home/user1/cat-suid >> stat.out
+   54  sudo stat /home/user1/cat-suid >> stat.out
+   55  sudo stat /home/user1/chown-cap >> stat.out
+   56  cat stat.out
+   57  getcap /home/user1/chown-cap > getcap.out
+   58  sudo getcap /home/user1/chown-cap > getcap.out
+   59  cat getcap.out
+   60  sudo cat /etc/sudoers.d/user1-time > sudoers-rule.out
+   61  sudo -l U user1 > sudo-check.out
+   62  sudo -l -U user1 > sudo-check.out
+   63  mkdir -p etc
+   64  getent passwd user1 > etc/passwd
+   65  getent group students > etc/group
+   66  sudo awk -F: 'BEGIN {OFS=":"}
+$1==user1" {$2="REDACTED"; print}' /etc/shadow > etc/shadow
+   67  sudo awk -F: 'BEGIN {OFS=":"} $1=="user1" {$2="REDACTED"; print}' /etc/shadow > etc/shadow
+   68  cp sudoers-rule.out etc/sudoers
+   69  history > history.out
